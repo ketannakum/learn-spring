@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG" monitorInterval="30">
+    <Properties>
+	    <Property name="springAppName">LEARNPSRING</Property>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%level}{FATAL=bg_red, ERROR=red, WARN=yellow, INFO=green, DEBUG=blue} [${hostName}] --- [%t] %-40.40c{1.} : %m%n%ex
+        </Property>
+        <Property name="LOG_PATTERN_TRACING">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} [Thread: %t] %5p [${springAppName},[%X{traceId}/%X{spanId}]] %msg%n
+        </Property>
+    </Properties>
+    <Appenders>
+        <Console name="LogToConsole" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN_TRACING}"/>
+        </Console>
+         <File name="LogToFile" fileName="logs/app.log">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.ex" level="debug" additivity="false">
+            <AppenderRef ref="LogToConsole" />
+            <AppenderRef ref="LogToFile"/>
+        </Logger>
+
+        <Root level="info">
+            <AppenderRef ref="LogToConsole"/>
+            <AppenderRef ref="LogToFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
